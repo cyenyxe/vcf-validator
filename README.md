@@ -100,9 +100,9 @@ If you don't have root permissions, please run `./configure --prefix=/path/to/od
 
 ### Compile
 
-The build has been tested on the following compilers:
-* Clang 3.5 to 3.7
-* GCC 4.8 to 5.0
+The build has been tested against the following compilers:
+* Clang 3.5 to 3.8
+* GCC 4.8, 4.9, 5 and 6
 
 In order to create the build scripts, please run `cmake` with your preferred generator. For instance, `cmake -G "Unix Makefiles"` will create Makefiles, and to build the binaries, you will need to run `make`. If the ODB libraries were not found during the build, please run `sudo updatedb && sudo ldconfig`.
 
