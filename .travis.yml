@@ -104,6 +104,22 @@ matrix:
             - libboost-program-options1.55-dev
             - libboost-regex1.55-dev
 
+    # GCC 6
+    - compiler: gcc
+      env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6
+      addons:
+        apt:
+          sources:
+            - boost-latest
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - libboost1.55-dev
+            - libboost-filesystem1.55-dev
+            - libboost-program-options1.55-dev
+            - libboost-regex1.55-dev
+
 before_script:
   - ./install_dependencies.sh
   - export PATH=$PATH:$PWD/odb/odb-2.4.0-x86_64-linux-gnu/bin/
@@ -112,4 +128,3 @@ before_script:
 script:
   - make
   - make test
-
