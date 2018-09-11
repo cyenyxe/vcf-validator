@@ -149,8 +149,7 @@ script:
 
 deploy:
   provider: releases
-  api_key:
-    secure: Fk7fej8it4mbFmXwCw/4N09dDmJQHtg/34QIccvEFdAgKIIKI51UUYmKfa/ALuV5lYaihK/x6H5Tk6iKL6gn5ZqhQ9wD5v2FbcW78pJ5nDvyfilJEo5IUNNuS0cob7fGhfHWw0fh89c5f5SN0RgpiGJZYG3RWuG72K8BAURvh7g/9QPRdy5/vdlKNRqiJtH+mFNQ/ybEG9LmBytZCD4KE3xkC40YZXSLGEexeCmMraghk0xNDhJuGjYA5pfylPGm4Sd8yqm9E1ZU+AVIpX1l7+49VxcgixtRsEP26IM5PiX14SzAJJ/J1eBm3jXXErIWPXs8ppzcB0F1hzxUSG/P/j7bnoIvYn3ZGvuZV2KkOcFIlTtUCX230vri2MJcWzGOjj5ZBAHQMch2OzspRverrWo5tiOt8v0sA5WTX3l3bQmutaSI6QZQc0a3u3FuhSdT4YH11jdAe+SZR8Wgqk94os9BG2hFH2RFR3oAtQ7YHSsuXlzd/Q2ASbJTtmN/c5BpenhkGqAg+StzEYQACSF/8x+LfN2K3rSuWjgnX7VHWUUn4Z7kYbg6c32Lsz0p9STC10x/FXZ+9ihnlWA+/J/nVp+1B0C8BbCqxSKv9m0jA+x3uIYR6hKcNTVN0PptsbJ4clNTBpl3jqYWSCCjN897ZRsHeXktSRJKe1PHM8ezpzU=
+  github-token: $GITHUB_TOKEN
   file:
     - bin/vcf_validator
     - bin/vcf_debugulator
