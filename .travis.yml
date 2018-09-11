@@ -9,7 +9,7 @@ cache:
     - linux_dependencies
     - osx_dependencies
 
-matrix:
+jobs:
   include:
 
     # OS X Clang
@@ -126,28 +126,6 @@ matrix:
             - libboost-log1.55-dev
             - ninja-build
 
-
-before_script:
-  - |
-    if [[ $TRAVIS_OS_NAME == "linux" ]]; then
-      ./install_dependencies.sh
-    fi
-  - |
-    if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-      ./install_dependencies.sh osx
-    fi
-
-script:
-  - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
-  - ninja -v -j2
-  - ninja test
-  - |
-      if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-        otool -L bin/vcf_validator
-      fi
-
-jobs:
-  include:
     - stage: deploy-linux
       deploy:
         provider: releases
@@ -195,3 +173,23 @@ jobs:
       env: C_COMPILER=clang CXX_COMPILER=clang++
       before_install:
         - brew install ninja
+
+
+before_script:
+  - |
+    if [[ $TRAVIS_OS_NAME == "linux" ]]; then
+      ./install_dependencies.sh
+    fi
+  - |
+    if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+      ./install_dependencies.sh osx
+    fi
+
+script:
+  - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
+  - ninja -v -j2
+  - ninja test
+  - |
+      if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+        otool -L bin/vcf_validator
+      fi
