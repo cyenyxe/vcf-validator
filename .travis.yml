@@ -138,23 +138,61 @@ before_script:
     fi
 
 
-script:
-  - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
-  - ninja -v -j2
-  - ninja test
-  - |
-    if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-      otool -L bin/vcf_validator
-    fi
-
-deploy:
-  provider: releases
-  api_key: $GITHUB_TOKEN
-  file:
-    - bin/vcf_validator
-    - bin/vcf_debugulator
-    - bin/vcf_assembly_checker
-  skip_cleanup: true
-  on:
-    repo: cyenyxe/vcf-validator
-    branch: release/0.9
+jobs:
+  include:
+    - stage: build
+      script:
+        - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
+        - ninja -v -j2
+        - ninja test
+        - |
+            if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+            otool -L bin/vcf_validator
+            fi
+    - stage: deploy-linux
+      deploy:
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        file:
+            - bin/vcf_validator
+            - bin/vcf_debugulator
+            - bin/vcf_assembly_checker
+        skip_cleanup: true
+        on:
+            repo: cyenyxe/vcf-validator
+            branch: release/0.9
+      os: linux
+      compiler: gcc
+      env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6
+      addons:
+        apt:
+          sources:
+            - boost-latest
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - libboost1.55-dev
+            - libboost-filesystem1.55-dev
+            - libboost-iostreams1.55-dev
+            - libboost-program-options1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-log1.55-dev
+            - ninja-build
+    - stage: deploy-macos
+      deploy:
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        file:
+            - bin/vcf_validator
+            - bin/vcf_debugulator
+            - bin/vcf_assembly_checker
+        skip_cleanup: true
+        on:
+            repo: cyenyxe/vcf-validator
+            branch: release/0.9
+      os: osx
+      osx_image: xcode9.3
+      env: C_COMPILER=clang CXX_COMPILER=clang++
+      before_install:
+        - brew install ninja
