@@ -137,18 +137,17 @@ before_script:
       ./install_dependencies.sh osx
     fi
 
+script:
+  - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
+  - ninja -v -j2
+  - ninja test
+  - |
+      if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+        otool -L bin/vcf_validator
+      fi
 
 jobs:
   include:
-    - stage: build
-      script:
-        - cmake -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_C_COMPILER=${C_COMPILER} ./ -GNinja
-        - ninja -v -j2
-        - ninja test
-        - |
-            if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-            otool -L bin/vcf_validator
-            fi
     - stage: deploy-linux
       deploy:
         provider: releases
