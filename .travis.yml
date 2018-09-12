@@ -194,7 +194,7 @@ script:
         otool -L bin/vcf_validator
       fi
 
-after_script:
+before_deploy:
   - |
       if [[ $TRAVIS_OS_NAME == "linux" ]]; then
         mv bin/vcf_validator bin/vcf_validator_linux
