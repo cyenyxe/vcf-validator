@@ -126,7 +126,7 @@ jobs:
             - libboost-log1.55-dev
             - ninja-build
 
-    - stage: "Deploy Linux"
+    - stage: "Linux release"
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
@@ -156,7 +156,7 @@ jobs:
             - libboost-regex1.55-dev
             - libboost-log1.55-dev
             - ninja-build
-    - stage: "Deploy MacOS"
+    - stage: "MacOS release"
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
